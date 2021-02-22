@@ -1,0 +1,27 @@
+{
+  "name": "jws-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DougAnderson444/jws-examples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DougAnderson444/jws-examples/issues"
+  },
+  "homepage": "https://github.com/DougAnderson444/jws-examples#readme",
+  "dependencies": {
+    "@peculiar/webcrypto": "^1.1.6",
+    "@stablelib/ed25519": "^1.0.1",
+    "bcrypto": "^5.4.0",
+    "jose": "^3.6.2"
+  }
+}
