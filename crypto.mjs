@@ -1,6 +1,6 @@
-import { Crypto } from '@peculiar/webcrypto'
+import Crypto from 'crypto'
 
-function isNodejs () {
+export function isNodejs () {
   return (
     typeof process === 'object' &&
     typeof process.versions === 'object' &&
@@ -12,7 +12,7 @@ function isNodejs () {
 let crypto
 
 if (isNodejs()) {
-  crypto = new Crypto()
+  crypto = Crypto
 } else {
   crypto = window.crypto
 }

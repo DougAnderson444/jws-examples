@@ -2,13 +2,16 @@ import sodium from 'sodium-universal'
 import base64url from 'base64url'
 import canonicalize from 'canonicalize'
 
+// Generate a keypair
 const keyPair = {
   publicKey: Buffer.alloc(sodium.crypto_sign_PUBLICKEYBYTES),
   secretKey: Buffer.alloc(sodium.crypto_sign_SECRETKEYBYTES)
 }
 sodium.crypto_sign_keypair(keyPair.publicKey, keyPair.secretKey)
-console.log({ keyPair })
+console.log('Sodium keypair:\n', { keyPair })
 
+/** If you don't want to use base64url then the code is below...
+ */
 // const hexToUintArray = hex => {
 //   const a = []
 //   for (let i = 0, len = hex.length; i < len; i += 2) {
@@ -38,11 +41,28 @@ console.log({ keyPair })
 //   return b64
 // }
 
+// private JWK is simply the private key as d and x
+
 export const privateKeyJwkFromEd25519PrivateKeyHex = (Ed25519privateKeyHex) => {
   const jwk = {
     crv: 'Ed25519',
     d: base64url.encode(Ed25519privateKeyHex.slice(0, 32)),
     x: base64url.encode(Ed25519privateKeyHex.slice(32, 64)),
+    kty: 'OKP'
+  }
+  const kid = getKid(jwk)
+  return {
+    ...jwk,
+    kid
+  }
+}
+
+// public JWK is simply the public key as x
+
+export const publicKeyJwkFromPublicKeyBaseHex = (Ed25519publicKeyHex) => {
+  const jwk = {
+    crv: 'Ed25519',
+    x: base64url.encode(Ed25519publicKeyHex),
     kty: 'OKP'
   }
   const kid = getKid(jwk)
@@ -63,4 +83,11 @@ export const getKid = (jwk) => {
   return base64url.encode(Buffer.from(digest))
 }
 
-console.log(privateKeyJwkFromEd25519PrivateKeyHex(keyPair.secretKey))
+// console.log(privateKeyJwkFromEd25519PrivateKeyHex(keyPair.secretKey))
+
+export const generateJwk = () => ({
+  publicKeyJwk: publicKeyJwkFromPublicKeyBaseHex(keyPair.publicKey),
+  privateKeyJwk: privateKeyJwkFromEd25519PrivateKeyHex(keyPair.secretKey)
+})
+
+// now
