@@ -1,6 +1,6 @@
 {
   "name": "jws-examples",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.mjs",
   "scripts": {
@@ -21,7 +21,11 @@
   "dependencies": {
     "@peculiar/webcrypto": "^1.1.6",
     "@stablelib/ed25519": "^1.0.1",
+    "base64url": "^3.0.1",
     "bcrypto": "^5.4.0",
-    "jose": "^3.6.2"
+    "canonicalize": "^1.0.5",
+    "crypto": "^1.0.1",
+    "jose": "^3.6.2",
+    "sodium-universal": "^3.0.4"
   }
 }
