@@ -43,11 +43,11 @@ console.log('Sodium keypair:\n', { keyPair })
 
 // private JWK is simply the private key as d and x
 
-export const privateKeyJwkFromEd25519PrivateKeyHex = (Ed25519privateKeyHex) => {
+export const privateKeyJwkFromEd25519PrivateKey = (Ed25519privateKey) => {
   const jwk = {
     crv: 'Ed25519',
-    d: base64url.encode(Ed25519privateKeyHex.slice(0, 32)),
-    x: base64url.encode(Ed25519privateKeyHex.slice(32, 64)),
+    d: base64url.encode(Ed25519privateKey.slice(0, 32)),
+    x: base64url.encode(Ed25519privateKey.slice(32, 64)),
     kty: 'OKP'
   }
   const kid = getKid(jwk)
@@ -59,10 +59,10 @@ export const privateKeyJwkFromEd25519PrivateKeyHex = (Ed25519privateKeyHex) => {
 
 // public JWK is simply the public key as x
 
-export const publicKeyJwkFromPublicKeyBaseHex = (Ed25519publicKeyHex) => {
+export const publicKeyJwkFromPublicKey = (Ed25519publicKey) => {
   const jwk = {
     crv: 'Ed25519',
-    x: base64url.encode(Ed25519publicKeyHex),
+    x: base64url.encode(Ed25519publicKey),
     kty: 'OKP'
   }
   const kid = getKid(jwk)
@@ -83,11 +83,11 @@ export const getKid = (jwk) => {
   return base64url.encode(Buffer.from(digest))
 }
 
-// console.log(privateKeyJwkFromEd25519PrivateKeyHex(keyPair.secretKey))
+// console.log(privateKeyJwkFromEd25519PrivateKey(keyPair.secretKey))
 
 export const generateJwk = () => ({
-  publicKeyJwk: publicKeyJwkFromPublicKeyBaseHex(keyPair.publicKey),
-  privateKeyJwk: privateKeyJwkFromEd25519PrivateKeyHex(keyPair.secretKey)
+  publicKeyJwk: publicKeyJwkFromPublicKey(keyPair.publicKey),
+  privateKeyJwk: privateKeyJwkFromEd25519PrivateKey(keyPair.secretKey)
 })
 
 // now

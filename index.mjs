@@ -52,7 +52,13 @@ async function main () {
 
   // Compact JWS Signature
   const encoder = new TextEncoder()
-  const jwsCompact = await new CompactSign(encoder.encode('It’s a dangerous business, Frodo, going out your door.'))
+
+  const textObj = { test: 'It’s a dangerous business, Frodo, going out your door.' }
+
+  console.log(textObj instanceof Object)
+  console.log(JSON.stringify(textObj) instanceof Object)
+
+  const jwsCompact = await new CompactSign(encoder.encode(JSON.stringify(textObj)))
     .setProtectedHeader({ alg })
     .sign(ecPrivateKey)
 
@@ -66,6 +72,7 @@ async function main () {
 
   console.log(protectedHeader)
   console.log(decoder.decode(payload))
+  console.log(decoder.decode(payload).text)
 
   // general Sign
   const sign = new GeneralSign(encoder.encode('It’s a dangerous business, Frodo, going out your door.'))
